@@ -13,9 +13,7 @@
 
 .movieTitle{
     position: relative;
-    text-align: center;
-}
-
-body{
-    background-color: aqua;
+    text-align: center !important;
+    text-decoration: none;
+    margin: 5px 0px;
 }

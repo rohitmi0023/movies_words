@@ -1,16 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Router from 'next/router'
 
 const SearchResult = ({ searchresult }) => {
+    const [currentMovie, setCurrentMovie] = useState('')
     let moviesList = []
     const movies = searchresult.data.Search
-    console.log(movies)
+
+    const handleClick = (Id) => {
+        setCurrentMovie(Id)
+        Router.push(`/movies/[movieId]`, `/movies/${Id}`)
+    }
+
     if (movies) {
         moviesList = movies.map((movie) => {
             return (
-                <div key={movie.imdbID} className='movie'>
-                    <img src={movie.Poster} className='moviePoster' alt='Movie poster' />
-                    <span className='movieTitle'>{movie.Title} ({movie.Year})</span>
+                <div key={movie.imdbID} className='movie' >
+                    {/* <Link href="/movies/[movieId]" as={`/movies/${movieId}`} > */}
+                    <a onClick={() => handleClick(movie.imdbID)}>
+                        <img src={movie.Poster} className='moviePoster' alt='Movie poster' />
+                        <p className='movieTitle'>{movie.Title} ({movie.Year})</p>
+                    </a>
+                    {/* </Link > */}
                 </div>
+
             )
         })
     }
@@ -18,9 +30,11 @@ const SearchResult = ({ searchresult }) => {
         moviesList.push(searchresult.data)
         moviesList = moviesList.map((movie) => {
             return (
-                <div key={movie.imdbID} className='movie'>
-                    <img src={movie.Poster} className='moviePoster' alt='Movie poster' />
-                    <span className='movieTitle'>{movie.Title} ({movie.Year})</span>
+                <div key={movie.imdbID} className='movie' >
+                    <a onClick={() => handleClick(movie.imdbID)}>
+                        <img src={movie.Poster} className='moviePoster' alt='Movie poster' />
+                        <p className='movieTitle'>{movie.Title} ({movie.Year})</p>
+                    </a>
                 </div>
             )
         })
