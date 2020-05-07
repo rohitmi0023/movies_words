@@ -28,9 +28,9 @@ app.prepare()
 		// Serve static assests if in production
 		if (process.env.NODE_ENV === 'production') {
 			//Set static folder
-			app.use('/', express.static(path.join(__dirname, 'pages')));
+			app.use('/', express.static(path.join(__dirname, 'out')));
 			app.get('*', (req, res) => {
-				res.sendFile(path.join(__dirname, 'pages', 'index.html'));
+				res.sendFile(path.join(__dirname, 'out', 'index.html'));
 			});
 		}
 
