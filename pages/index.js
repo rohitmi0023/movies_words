@@ -1,16 +1,21 @@
-import Head from 'next/head'
-import SearchMovies from '../components/SearchMovies'
+import Head from 'next/head';
+import SearchMovies from '../components/SearchMovies';
+import { useEffect } from 'react';
+import NavBar from '../components/NavBar';
 
-export default function Home() {
-  return (
-    <div >
-      <Head>
-        <title>Next App</title>
-      </Head>
-      <p>
-        Hello Nextjs
-      </p>
-      <SearchMovies />
-    </div>
-  )
-}
+const Home = () => {
+	useEffect(() => {
+		localStorage.setItem('user', '1');
+	}, []);
+	return (
+		<div>
+			<Head>
+				<title>Movies Words</title>
+			</Head>
+			<NavBar />
+			<SearchMovies />
+		</div>
+	);
+};
+
+export default Home;
