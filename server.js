@@ -25,6 +25,15 @@ app.prepare()
 			return handle(req, res);
 		});
 
+		// Serve static assests if in production
+		if (process.env.NODE_ENV === 'production') {
+			//Set static folder
+			app.use('/', express.static(path.join(__dirname, 'pages')));
+			app.get('*', (req, res) => {
+				res.sendFile(path.join(__dirname, 'pages', 'index.html'));
+			});
+		}
+
 		server.listen(3000, err => {
 			if (err) throw err;
 			console.log(`Server ready on localhost 3000`);
