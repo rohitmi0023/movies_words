@@ -107,6 +107,9 @@ const dictionary = ({ data }) => {
 				}
 			});
 		}
+		if (!matchedWords.length) {
+			alert('Nothing matched!');
+		}
 	};
 
 	return (
@@ -174,6 +177,7 @@ const dictionary = ({ data }) => {
 };
 
 dictionary.getInitialProps = async ctx => {
+	console.log(ctx.query);
 	if (ctx.query.movieId) {
 		const res = await fetch(
 			`http://www.omdbapi.com/?i=${ctx.query.movieId}&type=movie&apikey=${process.env.OmdbKey}`

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SearchResult from './SearchResult';
 import TextField from '@material-ui/core/TextField';
@@ -7,9 +7,9 @@ const SearchMovies = () => {
 	const [searchFormData, setSearchFormData] = useState('');
 	const [searchResult, setSearchResult] = useState({});
 	// for searching, it gives an array of lists
-	const urlforSearch = `http://www.omdbapi.com/?s="${searchFormData}"&type=movie&apikey=${process.env.OmdbKey}`;
+	const urlforSearch = `https://www.omdbapi.com/?s="${searchFormData}"&type=movie&apikey=${process.env.OmdbKey}`;
 	// for title specific, it gives a pariticular movie
-	const urlforTitle = `http://www.omdbapi.com/?t="${searchFormData}"&type=movie&apikey=${process.env.OmdbKey}`;
+	const urlforTitle = `https://www.omdbapi.com/?t="${searchFormData}"&type=movie&apikey=${process.env.OmdbKey}`;
 
 	const handleChange = async e => {
 		setSearchFormData(e.target.value);
