@@ -4,6 +4,7 @@ import SearchResult from './SearchResult';
 import TextField from '@material-ui/core/TextField';
 
 const SearchMovies = () => {
+	console.log(process.env);
 	const [searchFormData, setSearchFormData] = useState('');
 	const [searchResult, setSearchResult] = useState({});
 	// for searching, it gives an array of lists

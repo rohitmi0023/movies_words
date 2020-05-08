@@ -101,7 +101,7 @@ server.post(
 							}
 						);
 					} else {
-						// Word isn't added yet
+						// Word is already added
 					}
 				}
 			);
