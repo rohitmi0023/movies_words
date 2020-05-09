@@ -4,13 +4,15 @@ import SearchResult from './SearchResult';
 import TextField from '@material-ui/core/TextField';
 
 const SearchMovies = () => {
-	console.log(process.env);
+	console.log(`Env below`);
+	console.log(`${process.env.OmdbKey}`);
+	console.log(`${process.env}`);
 	const [searchFormData, setSearchFormData] = useState('');
 	const [searchResult, setSearchResult] = useState({});
 	// for searching, it gives an array of lists
-	const urlforSearch = `https://www.omdbapi.com/?s="${searchFormData}"&type=movie&apikey=${process.env.OmdbKey}`;
+	const urlforSearch = `https://www.omdbapi.com/?s=${searchFormData}&type=movie&apikey=${process.env.OmdbKey}`;
 	// for title specific, it gives a pariticular movie
-	const urlforTitle = `https://www.omdbapi.com/?t="${searchFormData}"&type=movie&apikey=${process.env.OmdbKey}`;
+	const urlforTitle = `https://www.omdbapi.com/?t=${searchFormData}&type=movie&apikey=${process.env.OmdbKey}`;
 
 	const handleChange = async e => {
 		setSearchFormData(e.target.value);
