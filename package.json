@@ -29,6 +29,7 @@
 		"react-router-dom": "^5.1.2"
 	},
 	"devDependencies": {
+		"dotenv-webpack": "^1.7.0",
 		"nodemon": "^2.0.3"
 	}
 }
