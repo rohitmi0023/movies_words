@@ -5,6 +5,7 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const WordResults = ({ words }) => {
+	// For upvoting and downvoting
 	const handleClick = async (word_id, vote) => {
 		const value = localStorage.getItem('user');
 		if (value) {
@@ -26,6 +27,7 @@ const WordResults = ({ words }) => {
 			alert('You can vote just once per session!!!');
 		}
 	};
+	// wordlist is the collection of words for each movie
 	let wordList;
 	if (words.data) {
 		wordList = words.data.map(each => {
@@ -58,7 +60,7 @@ const WordResults = ({ words }) => {
 			) : words.data.length ? (
 				<div style={{ display: 'inlineFlow' }}>{wordList}</div>
 			) : (
-				<p>Nothing Found</p>
+				<p>No word added yet.</p>
 			)}
 		</div>
 	);

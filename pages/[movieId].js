@@ -41,6 +41,7 @@ const Movies = () => {
 				</Fab>
 			</Link>
 			<span className='currentMovieTitle'>{currentMovie.Title}</span>
+			{console.log(currentMovie)}
 			{currentMovie ? (
 				<div className='currentMovieHead'>
 					<img

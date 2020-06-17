@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Axios from 'axios';
-import fetch from 'isomorphic-unfetch';
-import { useRouter } from 'next/router';
 import WordResults from '../../components/WordResults';
 import NavBar from '../../components/NavBar';
 import { Container, Button, TextField } from '@material-ui/core';
 
-const dictionary = ({ query }) => {
+const dictionary = () => {
 	const [currentMovie, setCurrentMovie] = useState('');
-	const [currentMovieId, setCurrentMovieId] = useState('');
 	const [searchWord, setSearchWord] = useState('');
+	const [searched, setSearched] = useState(false);
 	const [words, setWords] = useState([]);
 	const [matchedWords, setMatchedWords] = useState([]);
 	const [wordErrors, setWordErrors] = useState();
@@ -19,9 +17,7 @@ const dictionary = ({ query }) => {
 		setWordErrors('');
 		setSearchWord(e.target.value);
 	};
-
-	const router = useRouter();
-
+	// Submitting a word
 	const handleSubmit = async e => {
 		e.preventDefault();
 		const {
@@ -82,24 +78,26 @@ const dictionary = ({ query }) => {
 		const config = {
 			'Content-Type': 'application/json',
 		};
+		const movieId = window.location.pathname.replace('/', '').replace('/dict', '');
 		// Fetching the current movie details
 		Axios.get(
-			`https://www.omdbapi.com/?i=${router.query.movieId}&type=movie&apikey=${process.env.OmdbKey}`
+			`https://www.omdbapi.com/?i=${movieId}&type=movie&apikey=${process.env.OmdbKey}`
 		).then(res => {
 			setCurrentMovie(res.data);
 		});
 		// Fetching all the words on the initial render of the page
-		Axios.get(`/api/${router.query.movieId}/dict`, config).then(res => {
+		Axios.get(`/api/${movieId}/dict`, config).then(res => {
 			setWords(res);
 		});
 		// checcking for whether the subtitle for it is already there or not
-		Axios.get(`/api/${router.query.movieId}/subtitles`, config).then(res => {
+		Axios.get(`/api/${movieId}/subtitles`, config).then(res => {
 			setFile(res.data);
 		});
 	}, []);
 
 	//To display the matched words with the subtitles
 	const handleSearch = async e => {
+		setSearched(true);
 		if (!words.data.length) {
 			alert(`No word is added yet!`);
 		} else {
@@ -110,9 +108,6 @@ const dictionary = ({ query }) => {
 					setMatchedWords(prevArray => [...prevArray, item]);
 				}
 			});
-		}
-		if (!matchedWords.length) {
-			alert('Nothing matched!');
 		}
 	};
 
@@ -129,7 +124,7 @@ const dictionary = ({ query }) => {
 						<form
 							method='POST'
 							action={`/api/${currentMovie.imdbID}/subtitles`}
-							enctype='multipart/form-data'
+							encType='multipart/form-data'
 							className='formStyle'
 						>
 							<input
@@ -141,6 +136,7 @@ const dictionary = ({ query }) => {
 							<button style={{ fontSize: '17px' }}>Upload subtitle</button>
 						</form>
 						<br />
+						{/* Search button */}
 						{file ? (
 							<span style={{ float: 'right', position: 'relative' }}>
 								<span>Subtitles Found!</span>
@@ -167,15 +163,21 @@ const dictionary = ({ query }) => {
 							></TextField>
 						</form>
 						<br />
-						{matchedWords.length > 0 && (
-							<div style={{ display: 'inlineFlow' }}>
-								<p style={{ textAlign: 'center', fontSize: '18px' }}>
-									Matched words...
-								</p>
-								{matchedWords.map(each => {
-									return <div className='matchedWords'>{each.word}</div>;
-								})}
-							</div>
+						{searched ? (
+							matchedWords.length > 0 ? (
+								<div style={{ display: 'inlineFlow' }}>
+									<p style={{ textAlign: 'center', fontSize: '18px' }}>
+										Matched words...
+									</p>
+									{matchedWords.map(each => {
+										return <div className='matchedWords'>{each.word}</div>;
+									})}
+								</div>
+							) : (
+								<p>Nothing matched</p>
+							)
+						) : (
+							<p>Try searching to find matched words with the subtitles</p>
 						)}
 						<br />
 						<WordResults words={words} />

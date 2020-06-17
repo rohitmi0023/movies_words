@@ -87,7 +87,7 @@ server.post('/', (req, res) => {
 					}
 				);
 				alert('Successfully uploaded!');
-				res.json(`Subtitles addded!!`);
+				res.redirect(`/${movie_id}/dict`);
 			}
 		}
 	});

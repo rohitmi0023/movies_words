@@ -56753,7 +56753,7 @@ var Movies = function Movies() {
     }
   }, "Words"))), __jsx("span", {
     className: "currentMovieTitle"
-  }, currentMovie.Title), currentMovie ? __jsx("div", {
+  }, currentMovie.Title), console.log(currentMovie), currentMovie ? __jsx("div", {
     className: "currentMovieHead"
   }, __jsx("img", {
     src: currentMovie.Poster,
@@ -56788,7 +56788,7 @@ var Movies = function Movies() {
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /*!*******************************************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2F%5BmovieId%5D&absolutePagePath=%2Fhome%2Frohitmi0023%2Fdict_movies_next%2Fsrc%2Fpages%2F%5BmovieId%5D.js ***!
   \*******************************************************************************************************************************************************/
@@ -56811,5 +56811,5 @@ module.exports = dll_2adc2403d89adc16ead0;
 
 /***/ })
 
-},[[2,"static/runtime/webpack.js"]]]);
+},[[3,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=[movieId].js.map

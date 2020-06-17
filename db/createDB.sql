@@ -10,7 +10,7 @@ CREATE TABLE movies_details (
     poster VARCHAR(255),
     director VARCHAR(255),
     actors VARCHAR(255),
-    metascore TINYINT (255),
+    metascore VARCHAR (255),
     imdb_rating DECIMAL(2,1),
     imdb_votes INT
 );
@@ -26,7 +26,7 @@ CREATE TABLE movies_word (
 
 -- movies subtitles schema
 CREATE TABLE movies_subtitles (
-    movie_id VARCHAR(255) PRIMARY KEY,
+    movie_id VARCHAR(255),
     name VARCHAR(255),
     type VARCHAR(255),
     file_size INT

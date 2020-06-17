@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1906,7 +1906,7 @@ const Movies = () => {
     }
   }, "Words"))), __jsx("span", {
     className: "currentMovieTitle"
-  }, currentMovie.Title), currentMovie ? __jsx("div", {
+  }, currentMovie.Title), console.log(currentMovie), currentMovie ? __jsx("div", {
     className: "currentMovieHead"
   }, __jsx("img", {
     src: currentMovie.Poster,
@@ -1941,7 +1941,7 @@ const Movies = () => {
 
 /***/ }),
 
-/***/ 4:
+/***/ 5:
 /*!**********************************!*\
   !*** multi ./pages/[movieId].js ***!
   \**********************************/

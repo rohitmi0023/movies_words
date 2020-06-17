@@ -16,6 +16,10 @@
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
+    "/[movieId]/dict": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
     "/_app": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
