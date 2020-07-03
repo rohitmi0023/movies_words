@@ -13,6 +13,8 @@ const Home = () => {
 				<title>Movies Words</title>
 			</Head>
 			<NavBar />
+			<br />
+			<br />
 			<SearchMovies />
 		</div>
 	);

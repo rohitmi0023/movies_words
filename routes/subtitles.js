@@ -67,13 +67,13 @@ server.post('/', (req, res) => {
 						if (err) throw err;
 						if (!results.length) {
 							// subtitles is not added
-							connection.query('INSERT INTO movies_subtitles SET ?', data, function (
-								err,
-								result
-							) {
-								if (err) throw err;
-								console.log(result);
-							});
+							connection.query(
+								`INSERT INTO movies_subtitles (id, username, email, password) VALUES (1, ${username}, ${email}, ${password}) `,
+								function (err, result) {
+									if (err) throw err;
+									console.log(result);
+								}
+							);
 						} else {
 							//Subtitles is already added to it
 							connection.query(

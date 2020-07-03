@@ -1,15 +1,16 @@
 /* SearchResult */
 .moviePoster {
-	width: 175px;
 	height: 270px;
 	position: relative;
 	border-radius: 7%;
+	padding: 0px 10px;
 }
 
 .movie {
 	width: 160px;
 	display: inline-grid;
 	padding: 8px 15px 8px 15px;
+	margin: 0 20px;
 }
 
 .movieTitle {
@@ -77,4 +78,91 @@
 	font-style: italic;
 	padding: 10px 10px;
 	display: inline-block;
+}
+
+/* signUpPage */
+.cardCss {
+	/* Add shadows to create the "card" effect */
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	transition: 0.3s;
+	background-color: white;
+	padding: 30px 20px;
+	float: right;
+	margin: 0px 125px 0 0;
+	width: 400px;
+	height: 470px;
+}
+
+/* On mouse-over, add a deeper shadow */
+.cardCss:hover {
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* login */
+.cardCss {
+	/* Add shadows to create the "card" effect */
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	transition: 0.3s;
+	background-color: white;
+	padding: 30px 20px;
+	float: right;
+	margin: 0px 125px 0 0;
+	width: 400px;
+	height: 470px;
+}
+
+/* On mouse-over, add a deeper shadow */
+.cardCss:hover {
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.EmailPage__social-separator {
+	margin-bottom: 24px;
+}
+
+.RuleWithText {
+	border: 0;
+	height: auto;
+	outline: 0;
+	position: relative;
+	text-align: center;
+	color: #000000;
+}
+
+.RuleWithText:before {
+	background: #000000;
+	content: '';
+	height: 1px;
+	left: 0;
+	position: absolute;
+	top: 50%;
+	width: 100%;
+}
+
+.RuleWithText:after {
+	background-color: #fff;
+	color: black;
+	content: attr(data-content);
+	display: inline-block;
+	font-size: 17px;
+	font-weight: 300;
+	line-height: 21px;
+	padding: 0 0.5em;
+	position: relative;
+}
+
+.social-tab {
+	width: 100%;
+	border: 2px solid #63d7a2 !important;
+	border-radius: 100px !important;
+	font-weight: normal;
+	padding: 10px 0 !important;
+	margin: 5px 0px;
+}
+.google-tab {
+	background-color: white !important;
+}
+.facebook-tab {
+	background-color: #3b5998 !important;
+	color: white;
 }
