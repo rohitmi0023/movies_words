@@ -40,5 +40,6 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     email_hash VARCHAR(255),
     is_Verified TINYINT(1) DEFAULT 0,
-    date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    avatar VARCHAR(255)
 );

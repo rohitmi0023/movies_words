@@ -3,28 +3,38 @@ import Axios from 'axios';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useRouter } from 'next/dist/client/router';
 
 const WordResults = ({ words }) => {
+	const router = useRouter();
 	// For upvoting and downvoting
 	const handleClick = async (word_id, vote) => {
-		const value = localStorage.getItem('user');
-		if (value) {
-			localStorage.clear();
+		try {
+			// if (localStorage.jwtToken) {
+			// 	Axios.defaults.headers.common['auth-header-token'] = localStorage.jwtToken;
+			// } else {
+			// 	delete Axios.defaults.headers.common['auth-header-token'];
+			// }
 			const word_id_var = {
 				word_id: `${word_id}`,
 				vote: `${vote}`,
 			};
 			const body = JSON.stringify(word_id_var);
-			console.log(body);
 			const config = {
 				headers: {
 					'Content-Type': 'application/json',
+					'auth-header-token': localStorage.getItem('jwtToken'),
 				},
 			};
-			const res = await Axios.post(`/api/:id/dict/${word_id}`, body, config);
-			alert(res.data);
-		} else {
-			alert('You can vote just once per session!!!');
+			console.log(`Just above axios request of wordResults`);
+			const res = await Axios.post(`/api/movies/:id/dict/${word_id}`, body, config);
+			console.log(res);
+		} catch (err) {
+			console.log(err.message);
+			console.log(err.response);
+			console.log(err);
+			console.log(err.response.data);
+			console.log(err.response.data.message);
 		}
 	};
 	// wordlist is the collection of words for each movie

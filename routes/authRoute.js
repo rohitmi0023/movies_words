@@ -24,7 +24,7 @@ server.get(
 	(req, res) => {
 		try {
 			connection.query(
-				'SELECT email, username from `users` WHERE `id` = ?',
+				'SELECT email, username, date_registered, avatar from `users` WHERE `id` = ?',
 				[req.userId],
 				(err, results) => {
 					if (err) throw err;
@@ -33,6 +33,8 @@ server.get(
 							id: req.userId,
 							username: results[0].username,
 							email: results[0].email,
+							date_registered: results[0].date_registered,
+							avatar: results[0].avatar,
 						},
 					});
 				}

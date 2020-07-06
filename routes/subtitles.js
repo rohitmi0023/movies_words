@@ -34,26 +34,30 @@ let upload = multer({
 // To upload the subtitles
 server.post('/', (req, res) => {
 	upload(req, res, function (err) {
-		const movie_id = req.originalUrl.replace('/api/', '').replace('/subtitles', '');
+		const movie_id = req.originalUrl.replace('/api/movies/', '').replace('/subtitles', '');
 		if (err) {
 			if (req.fileValidationError) {
 				alert(err);
-				res.redirect(`/${movie_id}/dict`);
+				res.redirect(`/movies/${movie_id}/dict`);
 			}
 			if (err.code == 'LIMIT_FILE_SIZE') {
 				err.message = 'File Size is too large. Allowed file size is 400KB';
 				err.success = false;
 				alert('File Size is too large. Allowed file size is 400KB');
-				res.redirect(`/${movie_id}/dict`);
+				res.redirect(`/movies/${movie_id}/dict`);
 			}
 		} else {
 			if (!req.file) {
-				const movie_id = req.originalUrl.replace('/api/', '').replace('/subtitles', '');
+				const movie_id = req.originalUrl
+					.replace('/api/movies', '')
+					.replace('/subtitles', '');
 				alert('Please select a file!');
-				res.redirect(`/${movie_id}/dict`);
+				res.redirect(`/movies/${movie_id}/dict`);
 			}
 			if (req.file) {
-				const movie_id = req.originalUrl.replace('/api/', '').replace('/subtitles', '');
+				const movie_id = req.originalUrl
+					.replace('/api/movies/', '')
+					.replace('/subtitles', '');
 				let data = {
 					movie_id,
 					name: `${req.file.filename}`,
@@ -87,7 +91,7 @@ server.post('/', (req, res) => {
 					}
 				);
 				alert('Successfully uploaded!');
-				res.redirect(`/${movie_id}/dict`);
+				res.redirect(`/movies/${movie_id}/dict`);
 			}
 		}
 	});
@@ -95,7 +99,7 @@ server.post('/', (req, res) => {
 
 // to check whether the subtitles exists for the specific movie
 server.get('/', (req, res) => {
-	const movie_id = req.originalUrl.replace('/api/', '').replace('/subtitles', '');
+	const movie_id = req.originalUrl.replace('/api/movies/', '').replace('/subtitles', '');
 	connection.query(
 		'SELECT name from movies_subtitles WHERE movie_id = ?',
 		movie_id,

@@ -6,7 +6,7 @@ const SearchResult = ({ searchresult }) => {
 	const movies = searchresult.data.Search;
 
 	const handleClick = Id => {
-		Router.push(`/[movieId]`, `/${Id}`);
+		Router.push(`/movies/[movieId]`, `/movies/${Id}`);
 	};
 
 	if (movies) {

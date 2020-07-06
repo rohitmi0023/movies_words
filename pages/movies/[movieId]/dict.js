@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Axios from 'axios';
-import WordResults from '../../components/WordResults';
-import NavBar from '../../components/NavBar';
+import WordResults from '../../../components/WordResults';
+import NavBar from '../../../components/NavBar';
 import { Container, Button, TextField } from '@material-ui/core';
 
 const dictionary = () => {
@@ -53,7 +53,7 @@ const dictionary = () => {
 				},
 			};
 			const body = JSON.stringify(searchForm);
-			const res = await Axios.post(`/api/${imdbID}/dict`, body, config);
+			const res = await Axios.post(`/api/movies/${imdbID}/dict`, body, config);
 			alert(res.data);
 			setSearchWord('');
 		} catch (err) {
@@ -66,7 +66,7 @@ const dictionary = () => {
 			const config2 = {
 				'Content-Type': 'application/json',
 			};
-			Axios.get(`/api/${imdbID}/dict`, config2).then(res => {
+			Axios.get(`/api/movies/${imdbID}/dict`, config2).then(res => {
 				setWords(res);
 			});
 		} catch (error) {
@@ -78,7 +78,7 @@ const dictionary = () => {
 		const config = {
 			'Content-Type': 'application/json',
 		};
-		const movieId = window.location.pathname.replace('/', '').replace('/dict', '');
+		const movieId = window.location.pathname.replace('/movies/', '').replace('/dict', '');
 		// Fetching the current movie details
 		Axios.get(
 			`https://www.omdbapi.com/?i=${movieId}&type=movie&apikey=${process.env.OmdbKey}`
@@ -86,11 +86,11 @@ const dictionary = () => {
 			setCurrentMovie(res.data);
 		});
 		// Fetching all the words on the initial render of the page
-		Axios.get(`/api/${movieId}/dict`, config).then(res => {
+		Axios.get(`/api/movies/${movieId}/dict`, config).then(res => {
 			setWords(res);
 		});
 		// checcking for whether the subtitle for it is already there or not
-		Axios.get(`/api/${movieId}/subtitles`, config).then(res => {
+		Axios.get(`/api/movies/${movieId}/subtitles`, config).then(res => {
 			setFile(res.data);
 		});
 	}, []);
@@ -101,7 +101,7 @@ const dictionary = () => {
 		if (!words.data.length) {
 			alert(`No word is added yet!`);
 		} else {
-			const res = await Axios.get(`/api/${currentMovie.imdbID}/dict/matched`);
+			const res = await Axios.get(`/api/movies/${currentMovie.imdbID}/dict/matched`);
 			setMatchedWords([]);
 			words.data.map(item => {
 				if (!(res.data.search(item.word) === -1)) {
@@ -123,7 +123,7 @@ const dictionary = () => {
 					<Container>
 						<form
 							method='POST'
-							action={`/api/${currentMovie.imdbID}/subtitles`}
+							action={`/api/movies/${currentMovie.imdbID}/subtitles`}
 							encType='multipart/form-data'
 							className='formStyle'
 						>

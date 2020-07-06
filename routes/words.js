@@ -115,7 +115,7 @@ server.post(
 //To fetch all the words from db
 server.get('/', (req, res) => {
 	try {
-		let movie_id = req.originalUrl.replace('/api/', '').replace('/dict', '');
+		let movie_id = req.originalUrl.replace('/api/movies/', '').replace('/dict', '');
 		connection.query(
 			'SELECT word, id, upvotes from `movies_word` WHERE movie_id = ? ORDER BY upvotes DESC',
 			`${movie_id}`,

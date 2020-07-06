@@ -3,8 +3,20 @@ import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Link from 'next/link';
 import { connect } from 'react-redux';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Avatar from '@material-ui/core/Avatar';
 
-const NavBar = props => {
+const NavBar = ({ isAuthenticated, user }) => {
+	const [anchorEl, setAnchorEl] = useState(null);
+
+	const handleClick = event => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 	return (
 		<Fragment>
 			<AppBar position='static' style={{ backgroundColor: 'black' }}>
@@ -21,7 +33,7 @@ const NavBar = props => {
 								Home
 							</a>
 						</Link>
-						{props.isAuthenticated ? (
+						{user ? (
 							<span
 								style={{
 									textDecoration: 'none',
@@ -30,7 +42,30 @@ const NavBar = props => {
 									margin: '0px 25px 0px 5px',
 								}}
 							>
-								Logged In
+								<Avatar
+									aria-controls='simple-menu'
+									aria-haspopup='true'
+									onClick={handleClick}
+									src={user.avatar}
+								></Avatar>
+								<Menu
+									id='simple-menu'
+									anchorEl={anchorEl}
+									keepMounted
+									open={Boolean(anchorEl)}
+									onClose={handleClose}
+								>
+									<MenuItem onClick={handleClick}>
+										<Link href='/users/userProfile'>
+											<a>My Profile</a>
+										</Link>
+									</MenuItem>
+									<MenuItem onClick={handleClick}>
+										<Link href='/users/userProfile'>
+											<a>Logout</a>
+										</Link>
+									</MenuItem>
+								</Menu>
 							</span>
 						) : (
 							<Fragment>
@@ -70,6 +105,7 @@ const NavBar = props => {
 const mapStateToProps = state => {
 	return {
 		isAuthenticated: state.auth.isAuth,
+		user: state.auth.user,
 	};
 };
 

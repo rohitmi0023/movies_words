@@ -21,10 +21,10 @@ app.prepare()
 		server.use('/api/auth', require('./routes/authRoute'));
 		server.use('/api/users', require('./routes/signup'));
 		server.use('/api/login', require('./routes/login'));
-		server.use('/api/:id/dict', require('./routes/words'));
-		server.use('/api/:id/dict/matched', require('./routes/wordSearch'));
-		server.use('/api/:id/dict/:word_id', require('./routes/upvotes'));
-		server.use('/api/:id/subtitles', require('./routes/subtitles'));
+		server.use('/api/movies/:id/dict', require('./routes/words'));
+		server.use('/api/movies/:id/dict/matched', require('./routes/wordSearch'));
+		server.use('/api/movies/:id/dict/:word_id', require('./routes/upvotes'));
+		server.use('/api/movies/:id/subtitles', require('./routes/subtitles'));
 
 		server.get('*', (req, res) => {
 			return handle(req, res);

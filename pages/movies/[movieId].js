@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState, Fragment } from 'react';
 import Link from 'next/link';
-import NavBar from '../components/NavBar';
+import NavBar from '../../components/NavBar';
 import Fab from '@material-ui/core/Fab';
 import { Paper } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -11,6 +11,7 @@ const Movies = () => {
 	const [currentMovie, setCurrentMovie] = useState('');
 	const router = useRouter();
 	const { movieId } = router.query;
+	console.log(movieId);
 
 	useEffect(() => {
 		axios(`http://www.omdbapi.com/?i=${movieId}&type=movie&apikey=${process.env.OmdbKey}`).then(
@@ -35,7 +36,7 @@ const Movies = () => {
 		<Fragment>
 			<NavBar />
 			<br />
-			<Link href='/[movieId]/dict' as={`/${movieId}/dict`}>
+			<Link href='/movies/[movieId]/dict' as={`/movies/${movieId}/dict`}>
 				<Fab style={{ float: 'right' }} variant='extended'>
 					<a style={{ textDecoration: 'none', letterSpacing: '1.5px' }}>Words</a>
 				</Fab>

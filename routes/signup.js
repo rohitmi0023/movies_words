@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+const gravatar = require('gravatar');
 
 const server = express.Router();
 
@@ -42,6 +43,11 @@ server.post(
 							.update(userId)
 							.digest('hex');
 						console.log(emailVerifyHash);
+						const avatar = gravatar.url(email, {
+							s: '200',
+							r: 'pg',
+							d: 'mm',
+						});
 						bcrypt.hash(password, 10, async (err, hash) => {
 							let data = {
 								id: userId,
@@ -49,6 +55,7 @@ server.post(
 								email,
 								password: hash,
 								email_hash: emailVerifyHash,
+								avatar,
 							};
 							connection.query('INSERT INTO users SET ?', [data], (err, results) => {
 								if (err) throw err;
@@ -60,7 +67,7 @@ server.post(
 									{ expiresIn: '1h' },
 									(err, token) => {
 										if (err) throw err;
-										main(emailVerifyHash, userId).catch(console.error);
+										main(emailVerifyHash, userId, email).catch(console.error);
 										return res.status(200).send({ token, emailVerifyHash });
 									}
 								);
@@ -82,7 +89,7 @@ server.post(
 	}
 );
 
-async function main(emailVerifyHash, userId) {
+async function main(emailVerifyHash, userId, email) {
 	// Generate test SMTP service account from ethereal.email
 	// create reusable transporter object using the default SMTP transport
 	const link = `http://localhost:3000/auth/verify/${userId}?q=${emailVerifyHash}`;
@@ -100,7 +107,7 @@ async function main(emailVerifyHash, userId) {
 	// send mail with defined transport object
 	let info = await transporter.sendMail({
 		from: 'rohitracer0023@gmail.com', // sender address
-		to: 'b418040@iiit-bh.ac.in', // list of receivers
+		to: email, // list of receivers
 		subject: 'Account Verification', // Subject line
 		text: 'Verify', // plain text body
 		html: `<div><a href=${link}><b>Click to verify</b></a></div>`,

@@ -113,7 +113,6 @@ export const verifyUser = ({ userId, userEmailHash }) => async dispatch => {
 		};
 		const body = JSON.stringify(formData);
 		const res = await Axios.post('/api/auth/verify', body, config);
-		console.log(res);
 		dispatch({
 			type: types.IS_VERIFIED,
 		});
