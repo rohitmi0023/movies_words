@@ -1,4 +1,3 @@
-import React from 'react';
 import * as types from '../types';
 import Axios from 'axios';
 import { setAlert } from './alertAction';
@@ -18,6 +17,9 @@ export const loadUser = () => async dispatch => {
 			payload: res.data.user,
 		});
 	} catch (err) {
+		dispatch({
+			type: types.AUTH_ERROR,
+		});
 		console.log(err);
 	}
 };
@@ -42,7 +44,6 @@ export const signup = ({ username, email, password }) => async dispatch => {
 		}
 		dispatch({
 			type: types.REGISTER_SUCCESS,
-			payload: res.data,
 		});
 	} catch (err) {
 		const errors = err.response.data.errors;
@@ -71,7 +72,6 @@ export const login = ({ email, password }) => async dispatch => {
 		};
 		const body = JSON.stringify(formData);
 		const res = await Axios.post('/api/login', body, config);
-		console.log(res);
 		if (res.data.error) {
 			throw new Error(res.data.error);
 		}
@@ -80,7 +80,6 @@ export const login = ({ email, password }) => async dispatch => {
 			payload: res.data,
 		});
 		dispatch(loadUser());
-		localStorage.setItem('token', res.data.token);
 	} catch (err) {
 		console.log(err.message);
 		if (err.response.data.errors) {
@@ -99,8 +98,6 @@ export const login = ({ email, password }) => async dispatch => {
 
 // Verifying a user
 export const verifyUser = ({ userId, userEmailHash }) => async dispatch => {
-	console.log(`Came here in verifyUser function`);
-	console.log(userEmailHash);
 	try {
 		const config = {
 			headers: {
@@ -112,11 +109,19 @@ export const verifyUser = ({ userId, userEmailHash }) => async dispatch => {
 			userEmailHash,
 		};
 		const body = JSON.stringify(formData);
-		const res = await Axios.post('/api/auth/verify', body, config);
+		await Axios.post('/api/auth/verify', body, config);
 		dispatch({
-			type: types.IS_VERIFIED,
+			type: types.VERIFICATION_SUCCESS,
 		});
 	} catch (error) {
-		console.log(error.message);
+		console.log(error.response);
+		alert(error.response.data.error);
 	}
+};
+
+// Logging out the user
+export const logout = () => async dispatch => {
+	dispatch({
+		type: types.LOGOUT,
+	});
 };

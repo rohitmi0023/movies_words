@@ -6,7 +6,7 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
-export const IS_VERIFIED = 'IS_VERIFIED';
+export const VERIFICATION_SUCCESS = 'VERIFICATION_SUCCESS';
 
 // alert
 export const SET_ALERT = 'SET_ALERT';

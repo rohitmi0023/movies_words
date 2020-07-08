@@ -1,18 +1,26 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-export const index = ({ isAuthenticated }) => {
+export const index = ({ register_state, loading }) => {
 	const router = useRouter();
 	<h5>Please wait...</h5>;
 	useEffect(() => {
-		if (!isAuthenticated) {
+		if (!register_state) {
 			router.push('/auth/signup');
 		}
 	}, []);
 	return (
 		<Fragment>
-			{isAuthenticated ? (
+			{loading ? (
+				<div style={{ textAlign: 'center' }}>
+					<br />
+					<br />
+					<br />
+					<CircularProgress />
+				</div>
+			) : register_state ? (
 				<div>
 					<br />
 					<br />
@@ -22,14 +30,17 @@ export const index = ({ isAuthenticated }) => {
 						complete your sign up process.
 					</h6>
 				</div>
-			) : null}
+			) : (
+				<h3>You have not registered yet!</h3>
+			)}
 		</Fragment>
 	);
 };
 
 const mapStateToProps = state => {
 	return {
-		isAuthenticated: state.auth.isAuth,
+		register_state: state.auth.register_state,
+		loading: state.auth.loading,
 	};
 };
 

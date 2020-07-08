@@ -2,19 +2,9 @@ import React, { Fragment, useEffect } from 'react';
 import SignUpForm from '../../components/SignUpForm';
 import NavBar from '../../components/NavBar';
 import Link from 'next/link';
-import { Button, Alert } from 'reactstrap';
-import { useDispatch, useSelector } from 'react-redux';
-// import { fetchposts } from '../../store/actions/postAction';
-// import { connect } from 'react-redux';
-// import withRedux from 'next-redux-wrapper';
-// import makeStore from '../../store/reducer';
+import { useDispatch } from 'react-redux';
 
 const signup = () => {
-	const dispatch = useDispatch();
-	// const { posts } = useSelector(state => state.post);
-	// useEffect(() => {
-	// 	dispatch(fetchposts());
-	// }, []);
 	return (
 		<Fragment>
 			<NavBar />

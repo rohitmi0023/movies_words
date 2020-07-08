@@ -47,7 +47,7 @@ server.post(
 											{ expiresIn: '1h' },
 											(err, token) => {
 												if (err) throw err;
-												return res.status(200).send({ token });
+												return res.status(200).send({ jwtToken: token });
 											}
 										);
 									} else {

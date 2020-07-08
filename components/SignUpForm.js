@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Form, FormGroup, Alert } from 'reactstrap';
+import { Form, FormGroup } from 'reactstrap';
 import { connect, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { signup } from '../store/actions/authAction';
@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { setAlert } from '../store/actions/alertAction';
 
-const SignUpForm = ({ signup, isAuthenticated, alertMessages }) => {
+const SignUpForm = ({ signup, register_state, alertMessages }) => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const [formData, setFormData] = useState({
@@ -34,10 +34,10 @@ const SignUpForm = ({ signup, isAuthenticated, alertMessages }) => {
 	};
 
 	useEffect(() => {
-		if (isAuthenticated) {
+		if (register_state) {
 			router.push(`/auth/verify`);
 		}
-	}, [isAuthenticated]);
+	}, [register_state]);
 
 	return (
 		<Fragment>
@@ -135,7 +135,7 @@ SignUpForm.propTypes = {
 
 const mapStateToProps = state => {
 	return {
-		isAuthenticated: state.auth.isAuth,
+		register_state: state.auth.register_state,
 		alertMessages: state.alert,
 	};
 };

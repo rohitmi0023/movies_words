@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, FormGroup, Input } from 'reactstrap';
+import { Button, Form, FormGroup } from 'reactstrap';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';

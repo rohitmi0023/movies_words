@@ -13,6 +13,7 @@ const dictionary = () => {
 	const [matchedWords, setMatchedWords] = useState([]);
 	const [wordErrors, setWordErrors] = useState();
 	const [file, setFile] = useState(false);
+
 	const handleChange = async e => {
 		setWordErrors('');
 		setSearchWord(e.target.value);
@@ -47,6 +48,11 @@ const dictionary = () => {
 		};
 		// For new word submission
 		try {
+			if (localStorage.jwtToken) {
+				Axios.defaults.headers.common['auth-header-token'] = localStorage.jwtToken;
+			} else {
+				delete Axios.defaults.headers.common['auth-header-token'];
+			}
 			const config = {
 				headers: {
 					'Content-Type': 'application/json',
@@ -57,9 +63,13 @@ const dictionary = () => {
 			alert(res.data);
 			setSearchWord('');
 		} catch (err) {
-			if (err.response) {
+			alert('Please login to add words!');
+			console.log(err);
+			console.log(err.response);
+			if (err.response.data.errors) {
 				setWordErrors(err.response.data.errors[0].msg);
 			}
+			setSearchWord('');
 		}
 		// for fetching all the words including the recent one just after submission
 		try {
@@ -81,7 +91,7 @@ const dictionary = () => {
 		const movieId = window.location.pathname.replace('/movies/', '').replace('/dict', '');
 		// Fetching the current movie details
 		Axios.get(
-			`https://www.omdbapi.com/?i=${movieId}&type=movie&apikey=${process.env.OmdbKey}`
+			`https://cors-anywhere.herokuapp.com/https://www.omdbapi.com/?i=${movieId}&type=movie&apikey=${process.env.OmdbKey}`
 		).then(res => {
 			setCurrentMovie(res.data);
 		});

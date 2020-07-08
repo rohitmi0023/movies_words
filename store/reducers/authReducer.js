@@ -4,9 +4,8 @@ const authState = {
 	user: null,
 	isAuth: false,
 	loading: true,
-	token: null,
 	isVerified: false,
-	emailVerifyHash: null,
+	register_state: false,
 };
 
 export const authReducer = (state = authState, action) => {
@@ -14,41 +13,50 @@ export const authReducer = (state = authState, action) => {
 		case types.USER_LOADED:
 			return {
 				...state,
-				isAuth: true,
-				isVerified: true,
 				loading: false,
 				user: action.payload,
 			};
 		case types.REGISTER_SUCCESS:
 			return {
 				...state,
-				...action.payload,
-				isAuth: true,
 				loading: false,
-				emailVerifyHash: action.payload.emailVerifyHash,
+				register_state: true,
 			};
 		case types.LOGIN_SUCCESS:
-			localStorage.setItem('jwtToken', action.payload.token);
+			localStorage.setItem('jwtToken', action.payload.jwtToken);
 			return {
 				...state,
-				...action.payload,
 				isAuth: true,
 				loading: false,
-				isVerified: true,
 			};
-		case types.IS_VERIFIED:
+		case types.VERIFICATION_SUCCESS:
 			return {
 				...state,
 				isVerified: true,
 			};
 		case types.REGISTER_FAIL:
+			return {
+				...state,
+				loading: false,
+			};
 		case types.AUTH_ERROR:
+			return {
+				...state,
+				loading: false,
+				user: null,
+			};
 		case types.LOGIN_FAIL:
+			return {
+				...state,
+				loading: false,
+			};
 		case types.LOGOUT:
+			localStorage.removeItem('jwtToken');
 			return {
 				...state,
 				isAuth: false,
 				loading: false,
+				user: null,
 			};
 		default:
 			return state;

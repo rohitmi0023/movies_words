@@ -10,8 +10,6 @@ const server = express.Router();
 server.post(
 	'/',
 	(req, res, next) => {
-		console.log(`Got here!`);
-		console.log(`Its at the top`);
 		const token = req.header('auth-header-token');
 		if (!token) {
 			console.log('Came here !token');
@@ -23,7 +21,7 @@ server.post(
 			req.userId = decoded.userId;
 		} catch (err) {
 			console.log(`Came here under catch`);
-			res.status(401).json({ msg: 'Invalid Token' });
+			return res.status(401).json({ msg: 'Invalid Token' });
 		}
 		next();
 	},

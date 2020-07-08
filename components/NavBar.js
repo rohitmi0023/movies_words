@@ -2,14 +2,18 @@ import React, { Fragment, useEffect, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Link from 'next/link';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Avatar from '@material-ui/core/Avatar';
+import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
+import { logout } from '../store/actions/authAction';
 
-const NavBar = ({ isAuthenticated, user }) => {
+const NavBar = ({ isAuthenticated, user, logout }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
-
+	const dispatch = useDispatch();
+	const router = useRouter();
 	const handleClick = event => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -17,6 +21,12 @@ const NavBar = ({ isAuthenticated, user }) => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
+	const handleClickLogout = () => {
+		logout();
+		router.push('/');
+	};
+
 	return (
 		<Fragment>
 			<AppBar position='static' style={{ backgroundColor: 'black' }}>
@@ -60,11 +70,7 @@ const NavBar = ({ isAuthenticated, user }) => {
 											<a>My Profile</a>
 										</Link>
 									</MenuItem>
-									<MenuItem onClick={handleClick}>
-										<Link href='/users/userProfile'>
-											<a>Logout</a>
-										</Link>
-									</MenuItem>
+									<MenuItem onClick={handleClickLogout}>Logout</MenuItem>
 								</Menu>
 							</span>
 						) : (
@@ -102,6 +108,10 @@ const NavBar = ({ isAuthenticated, user }) => {
 	);
 };
 
+NavBar.proptypes = {
+	logout: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = state => {
 	return {
 		isAuthenticated: state.auth.isAuth,
@@ -109,4 +119,4 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps)(NavBar);
+export default connect(mapStateToProps, { logout })(NavBar);

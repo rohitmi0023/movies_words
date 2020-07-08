@@ -14,11 +14,11 @@ const Movies = () => {
 	console.log(movieId);
 
 	useEffect(() => {
-		axios(`http://www.omdbapi.com/?i=${movieId}&type=movie&apikey=${process.env.OmdbKey}`).then(
-			res => {
-				setCurrentMovie(res.data);
-			}
-		);
+		axios(
+			`https://cors-anywhere.herokuapp.com/http://www.omdbapi.com/?i=${movieId}&type=movie&apikey=${process.env.OmdbKey}`
+		).then(res => {
+			setCurrentMovie(res.data);
+		});
 	}, []);
 
 	let rating = currentMovie.Ratings;
@@ -42,7 +42,6 @@ const Movies = () => {
 				</Fab>
 			</Link>
 			<span className='currentMovieTitle'>{currentMovie.Title}</span>
-			{console.log(currentMovie)}
 			{currentMovie ? (
 				<div className='currentMovieHead'>
 					<img

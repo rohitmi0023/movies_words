@@ -17,13 +17,6 @@ server.post(
 		check('username', 'Username is required').not().isEmpty(),
 		check('email', 'Email is required').isEmail(),
 		check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 }),
-		// .custom((value, { req }) => {
-		// 	if (value !== req.body.rePassword) {
-		// 		throw new Error(`Passwords don't match`);
-		// 	} else {
-		// 		return value;
-		// 	}
-		// }),
 	],
 	async (req, res) => {
 		const errors = validationResult(req);
@@ -83,15 +76,12 @@ server.post(
 				}
 			});
 		} catch (error) {
-			console.log(`This is the throw error message ${error.message}`);
 			return res.status(400).json({ errors: [{ msg: error.message, param: 'unknown' }] });
 		}
 	}
 );
 
 async function main(emailVerifyHash, userId, email) {
-	// Generate test SMTP service account from ethereal.email
-	// create reusable transporter object using the default SMTP transport
 	const link = `http://localhost:3000/auth/verify/${userId}?q=${emailVerifyHash}`;
 	let transporter = nodemailer.createTransport({
 		host: 'smtp.gmail.com',
@@ -103,7 +93,6 @@ async function main(emailVerifyHash, userId, email) {
 			pass: `${process.env.EMAIL_PASSWORD}`, // generated ethereal password
 		},
 	});
-
 	// send mail with defined transport object
 	let info = await transporter.sendMail({
 		from: 'rohitracer0023@gmail.com', // sender address
@@ -114,11 +103,7 @@ async function main(emailVerifyHash, userId, email) {
 	});
 
 	console.log('Message sent: %s', info.messageId);
-	// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-	// Preview only available when sending through an Ethereal account
 	console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-	// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 
 module.exports = server;

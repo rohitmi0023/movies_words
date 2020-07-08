@@ -10,6 +10,19 @@ const server = express.Router();
 // to add a new word
 server.post(
 	'/',
+	(req, res, next) => {
+		const token = req.header('auth-header-token');
+		if (!token) {
+			return res.status(401).json({ msg: 'No token, authorization failed!' });
+		}
+		try {
+			const decoded = jwt.verify(token, process.env.jwtSecret);
+			req.userId = decoded.userId;
+		} catch (err) {
+			return res.status(401).json({ msg: 'Invalid Token' });
+		}
+		next();
+	},
 	[
 		check('searchWord')
 			.isLength({ max: 25 })
