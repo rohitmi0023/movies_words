@@ -28,7 +28,7 @@
 		"mysql": "^2.18.1",
 		"next": "9.3.5",
 		"next-redux-wrapper": "^6.0.2",
-		"nodemailer": "^6.4.10",
+		"nodemailer": "^6.4.16",
 		"path": "^0.12.7",
 		"react": "16.13.1",
 		"react-dom": "16.13.1",
